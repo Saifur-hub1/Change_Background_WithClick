@@ -29,6 +29,11 @@ body{
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
 }
+.css-input:focus{
+    outline: none;
+    border: 1px solid gray;
+}
+
 .css-enterButton{
   padding: 18px 20px;
   font-size: 24px;

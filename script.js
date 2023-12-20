@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", function(){
     const color = e.target.value;
     if(color){
       EnButton.value = color.toUpperCase();
-      if(isValidHex(color)) document.body.style.backgroundColor = `#${color}`;
+      if(isValidHex(color)){
+        desireBackColor();
+      };
     }
   });
 
@@ -26,8 +28,27 @@ function isValidHex(color){
 
 
 function desireBackColor(){
-  const inputFeed = document.querySelector(".css-input").value;
-  document.body.style.backgroundColor = inputFeed;
+  let inputFeed = document.querySelector(".css-input").value;
+  // document.body.style.backgroundColor = inputFeed;
+
+  if(inputFeed[0]==='R'){
+    let regex = /\d+/g;
+    let number = inputFeed.match(regex);
+    const R = singleCharHandle(Number(number[0]).toString(16))
+    const G = singleCharHandle(Number(number[1]).toString(16))
+    const B = singleCharHandle(Number(number[2]).toString(16))
+    const hex = `#${R}${G}${B}`;
+    updateProperty(inputFeed,hex);
+    console.log(typeof 45);
+  }
+  else{
+    inputFeed = "#"+inputFeed;
+    const R = parseInt(inputFeed.slice(1,3),16);
+    const G = parseInt(inputFeed.slice(3,5),16);
+    const B = parseInt(inputFeed.slice(5,7),16);
+    const RGB = `RGB(${R},${G},${B})`;
+    updateProperty(RGB , inputFeed);
+  }
 }
 
 // rgb(0,0,0)
@@ -47,15 +68,19 @@ function showRGB_HEX(){
   const rgb = (`rgb(${r},${g},${b})`).toUpperCase();
   const hex = (`#${hr}${hg}${hb}`).toUpperCase();
   
+  updateProperty(rgb,hex);
+}
+
+function updateProperty(rgb,hex){
   document.body.style.backgroundColor = rgb;
 
   document.querySelector(".css-rgb-hex-container").innerHTML = `
   <div class="css-rgb-container">
-    <div class="css-title">RGB</div>
+    <div class="css-title">RGB Code</div>
     <button class="css-rgb">${rgb}</button>
   </div>
   <div class="css-hex-container">
-    <div class="css-title">HEX</div>
+    <div class="css-title">HEX Code</div>
     <button class="css-hex">${hex}</button>
   </div>
   `;
